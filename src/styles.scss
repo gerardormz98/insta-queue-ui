@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-inter text-slate-900
+  }
+
+  input {
+    @apply block w-full bg-white rounded-md py-2 px-3 text-sm shadow-sm ring-1 ring-inset outline-none ring-gray-300 focus:ring-2 focus:ring-indigo-600;
+  }
+
+  label {
+    @apply text-sm inline-block py-3 font-semibold;
+  }
+
+  button {
+    @apply py-2 px-4 rounded-md text-white text-sm font-bold bg-indigo-600 hover:bg-indigo-700;
+  }
+}

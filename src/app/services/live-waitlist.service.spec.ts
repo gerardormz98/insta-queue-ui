@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SignalRService } from './signal-r.service';
+import { LiveWaitlistService } from './live-waitlist.service';
 
-describe('SignalRService', () => {
-  let service: SignalRService;
+describe('LiveWaitlistService', () => {
+  let service: LiveWaitlistService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SignalRService);
+    service = TestBed.inject(LiveWaitlistService);
   });
 
   it('should be created', () => {

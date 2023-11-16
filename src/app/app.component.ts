@@ -26,10 +26,10 @@ export class AppComponent {
     this.userAdded$ = this.liveWaitlistService.userAdded.subscribe((data) => { this.onUserAdded(data) });
     this.userRemoved$ = this.liveWaitlistService.userRemoved.subscribe((data) => { this.onUserRemoved(data) });
 
-    this.liveWaitlistService.startConnection()
-      .then(() => console.log('Connection started'))
-      .catch((err) => console.error(`Error while starting connection.`))
-      .finally(() => this.isLoading = false);
+    // this.liveWaitlistService.startConnection()
+    //   .then(() => this.liveWaitlistService.printConnectionId())
+    //   .catch((err) => console.error(`Error while starting connection.`))
+    //   .finally(() => this.isLoading = false);
 
     this.liveWaitlistService.getWaitlistSize()
       .pipe(

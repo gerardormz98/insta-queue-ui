@@ -24,6 +24,10 @@ export class LiveWaitlistService {
     this.connection.on("PartyRemoved", data => this.onPartyRemoved(data));
   }
 
+  public printConnectionId() {
+    console.log(`Current Connection ID: ${this.connection.connectionId}`);
+  }
+
   public startConnection() {
     return this.connection.start();
   }

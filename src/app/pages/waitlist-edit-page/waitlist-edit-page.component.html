@@ -1,0 +1,82 @@
+<div class="h-[100svh] flex flex-col bg-gradient">
+  <div class="p-4 grow">
+    <div class="flex justify-between items-center">
+      <app-logo></app-logo>
+      <app-back-button></app-back-button>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="max-w-md w-full">
+        <h3 class="text-3xl font-bold py-4">Edit waitlist</h3>
+
+        <p class="text-sm mb-3">The waitlist will remain active until an administrator stops it, or if there's no activity for 1 hour.</p>
+
+        <form class="w-full" [formGroup]="createWaitlistForm" (ngSubmit)="updateWaitlist()">
+          <div class="pb-2">
+            <label for="txtName">Business Name</label>
+            <input
+              type="text"
+              class="form-control"
+              [class.form-control-error]="txtNameInvalid()"
+              (change)="txtName.setValue(txtName.value ? txtName.value.trim() : '')"
+              formControlName="name"
+              id="txtName"
+              placeholder="Pizza Palace"
+              minlength="2"
+              maxlength="100" />
+          </div>
+
+          @if (txtNameInvalid()) {
+            <div class="text-danger text-xs">Business name must be at least 2 characters long.</div>
+          }
+
+          <div class="pb-2">
+            <label for="txtDescription">Description</label>
+            <p class="text-xs mb-4 -mt-2 text-gray-500">Your customers will see this description while they're waiting.</p>
+            <textarea
+              class="form-control"
+              [class.form-control-error]="txtDescriptionInvalid()"
+              (change)="txtDescription.setValue(txtDescription.value ? txtDescription.value.trim() : '')"
+              formControlName="description"
+              id="txtDescription"
+              rows="6"
+              placeholder="We have the best pizzas in the city!"
+              maxlength="10000"></textarea>
+          </div>
+
+          @if (txtDescriptionInvalid()) {
+            <div class="text-danger text-xs">Description must be at least 20 characters long.</div>
+          }
+
+          <div class="flex flex-col items-center mb-6 sm:flex-row sm:my-6 sm:justify-center sm:gap-3">
+            <button type="submit" class="btn-primary my-3 rounded-full flex justify-center w-full sm:w-auto sm:m-0" [disabled]="isLoading || createWaitlistForm.invalid">
+              @if (isLoading) {
+                <app-loading-spinner></app-loading-spinner>
+                <span>Loading...</span>
+              }
+              @else {
+                <span>Update waitlist!</span>
+              }
+            </button>
+
+            <button type="button" class="btn-secondary mb-3 rounded-full w-full sm:w-auto sm:mb-0 text-danger" (click)="handleCloseWaitlistClick()">Close waitlist</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  @if (isCloseWaitlistModalOpened)
+  {
+    <app-alert-modal
+      modalTitle="Close Waitlist"
+      modalMessage="Are you sure you want to close the waitlist? This cannot be undone. If you want to open the waitlist again, you will have to recreate it."
+      confirmButtonText="Close waitlist"
+      cancelButtonText="Cancel"
+      (modalCancel)="handleCloseWaitlistModalCancel()"
+      (modalConfirm)="handleCloseWaitlistModalConfirm()">
+    </app-alert-modal>
+  }
+
+  <app-footer></app-footer>
+</div>

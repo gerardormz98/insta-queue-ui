@@ -1,0 +1,40 @@
+<div class="h-[100svh] flex flex-col bg-gradient">
+  <div class="p-4 grow flex flex-col">
+    <div class="flex justify-between items-center">
+      <app-logo></app-logo>
+      <app-back-button></app-back-button>
+    </div>
+
+    <div class="grow flex flex-col items-center justify-center py-8">
+      <h3 class="text-2xl font-bold text-center">{{ host ? host.hostName : "..."}}'s waitlist</h3>
+      <p class="text-gray-500 mb-8 text-sm">Admin access</p>
+
+      <div class="h-60 mb-8">
+        <img class="w-full h-full" src="../../../assets/img/admin-img.svg" alt="Admin page">
+      </div>
+
+      <form (ngSubmit)="handleAccessClick()" class="flex flex-col items-center">
+        <p class="text-center mb-4">Please enter the administrator password:</p>
+        <div class="max-w-xs">
+          <input type="password" #txtPassword id="txtPassword" name="password" [(ngModel)]="password" (ngModelChange)="errorMessage = ''" class="form-control" maxlength="100" [class.form-control-error]="errorMessage" />
+
+          @if (errorMessage) {
+            <div class="text-danger text-sm mt-2 text-center w-full">{{errorMessage}}</div>
+          }
+        </div>
+
+        <button type="submit" class="btn-primary mt-8 mb-6 rounded-full flex" [disabled]="isLoading || password.length === 0">
+          @if (isLoading) {
+            <app-loading-spinner></app-loading-spinner>
+            <span>Validating...</span>
+          }
+          @else {
+            <span>Validate</span>
+          }
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>

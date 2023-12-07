@@ -1,0 +1,20 @@
+<!-- Modal background -->
+<div #modalBackground class="w-screen h-screen bg-black opacity-40 fixed top-0" (click)="closeModal()"></div>
+
+<div #modalContent class="fixed -bottom-full w-full transition-all duration-300 sm:flex sm:h-full sm:justify-center sm:items-center " (click)="closeModal()">
+  <div class="bg-white m-4 rounded-md p-4 flex flex-col items-center sm:max-w-md sm:p-6 sm:flex-row sm:items-start sm:gap-4" (click)="$event.stopPropagation()">
+
+    <div class="max-w-full overflow-hidden">
+      <h3 class="font-semibold mb-2 text-center sm:text-left">Waitlist QR Code</h3>
+      <p class="text-gray-500">Your customers can scan this QR code to enqueue to your waitlist.</p>
+
+      <div class="w-full flex justify-center">
+        <qrcode [qrdata]="qrText" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+      </div>
+
+      <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
+        <button class="btn-secondary w-full sm:w-auto sm:order-2" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

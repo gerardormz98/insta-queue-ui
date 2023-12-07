@@ -1,75 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LiveWaitlistService } from './services/live-waitlist.service';
-import { Subscription, catchError } from 'rxjs';
+import { AppAlert, AppNotification } from './model/appNotification';
+import { NotificationService } from './services/notification.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'live-waitlist';
-  isLoading = true;
-  waitlistSize = 0;
-  addedToWaitlist = false;
+export class AppComponent implements OnInit, OnDestroy {
+  notifications: AppNotification[] = [];
+  alert?: AppAlert;
 
-  private partyAdded$: Subscription;
-  private partyRemoved$: Subscription;
-  private userAdded$: Subscription;
-  private userRemoved$: Subscription;
+  private appNotified$: Subscription;
+  private appAlerted$: Subscription;
 
-  constructor(private liveWaitlistService: LiveWaitlistService) {}
+  constructor(private liveWaitlistService: LiveWaitlistService, private notificationService: NotificationService) {}
 
-  ngOnInit() {
-    this.partyAdded$ = this.liveWaitlistService.partyAdded.subscribe((data) => { this.onPartyAdded(data) });
-    this.partyRemoved$ = this.liveWaitlistService.partyRemoved.subscribe((data) => { this.onPartyRemoved(data) });
-    this.userAdded$ = this.liveWaitlistService.userAdded.subscribe((data) => { this.onUserAdded(data) });
-    this.userRemoved$ = this.liveWaitlistService.userRemoved.subscribe((data) => { this.onUserRemoved(data) });
+  ngOnInit(): void {
+    this.liveWaitlistService.startConnection();
 
-    // this.liveWaitlistService.startConnection()
-    //   .then(() => this.liveWaitlistService.printConnectionId())
-    //   .catch((err) => console.error(`Error while starting connection.`))
-    //   .finally(() => this.isLoading = false);
-
-    this.liveWaitlistService.getWaitlistSize()
-      .pipe(
-        catchError((err) => {
-          console.log(err);
-          throw err;
-        })
-      )
-      .subscribe(
-        (value) => { this.waitlistSize = value }
-      );
+    this.appNotified$ = this.notificationService.appNotified.subscribe((notification) => { this.onNewNotification(notification) });
+    this.appAlerted$ = this.notificationService.appAlerted.subscribe((alert) => { this.onNewAlert(alert) });
   }
 
-  addToWaitList() {
-    this.liveWaitlistService.addToWaitlist('', 1) // TODO: Validate and pass forms values
-      .then(() => { this.addedToWaitlist = true; });
+  onNewNotification(notification: AppNotification) {
+    this.notifications.push(notification);
   }
 
-  onUserAdded(data: any) {
-    this.waitlistSize++;
+  onCloseNotification(notification: AppNotification) {
+    const notificationIndex = this.notifications.indexOf(notification);
+    this.notifications.splice(notificationIndex, 1);
   }
 
-  onUserRemoved(data: any) {
-    if (this.waitlistSize > 0)
-      this.waitlistSize--;
+  onNewAlert(alert: AppAlert) {
+    this.alert = alert;
   }
 
-  onPartyAdded(data: any) {
-    this.waitlistSize++;
+  onAlertClosed() {
+    this.alert = undefined;
   }
 
-  onPartyRemoved(data: any) {
-    if (this.waitlistSize > 0)
-      this.waitlistSize--;
-  }
-
-  ngOnDestroy() {
-    this.partyAdded$.unsubscribe();
-    this.partyRemoved$.unsubscribe();
-    this.userAdded$.unsubscribe();
-    this.userRemoved$.unsubscribe();
+  ngOnDestroy(): void {
+    this.appNotified$.unsubscribe();
+    this.appAlerted$.unsubscribe();
   }
 }

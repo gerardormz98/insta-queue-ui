@@ -1,0 +1,94 @@
+<div class="h-[100svh] flex flex-col bg-gradient">
+  <div class="p-4 grow">
+    <div class="flex justify-between items-center">
+      <app-logo></app-logo>
+      <app-back-button></app-back-button>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="max-w-md w-full">
+        <h3 class="text-3xl font-bold py-4">New waitlist</h3>
+
+        <p class="text-sm mb-3">The waitlist will remain active until an administrator stops it, or if there's no activity for 1 hour.</p>
+
+        <form class="w-full" [formGroup]="createWaitlistForm" (ngSubmit)="createWaitlist()">
+          <div class="pb-2">
+            <label for="txtName">Business Name</label>
+            <input
+              type="text"
+              class="form-control"
+              [class.form-control-error]="txtNameInvalid()"
+              (change)="txtName.setValue(txtName.value ? txtName.value.trim() : '')"
+              formControlName="name"
+              id="txtName"
+              placeholder="Pizza Palace"
+              minlength="2"
+              maxlength="100" />
+          </div>
+
+          @if (txtNameInvalid()) {
+            <div class="text-danger text-xs">Business name must be at least 2 characters long.</div>
+          }
+
+          <div class="pb-2">
+            <label for="txtDescription">Description</label>
+            <p class="text-xs mb-4 -mt-2 text-gray-500">Your customers will see this description while they're waiting.</p>
+            <textarea
+              class="form-control"
+              [class.form-control-error]="txtDescriptionInvalid()"
+              (change)="txtDescription.setValue(txtDescription.value ? txtDescription.value.trim() : '')"
+              formControlName="description"
+              id="txtDescription"
+              rows="6"
+              placeholder="We have the best pizzas in the city!"
+              maxlength="10000"></textarea>
+          </div>
+
+          @if (txtDescriptionInvalid()) {
+            <div class="text-danger text-xs">Description must be at least 20 characters long.</div>
+          }
+
+          <div class="pb-2">
+            <label for="txtPassword">Admin Password</label>
+            <p class="text-xs mb-4 -mt-2 text-gray-500">This will be user by the administrators to manage the waitlist. <b>Keep it safe</b>, only share this with other admin users.</p>
+            <input type="password" class="form-control" [class.form-control-error]="txtPasswordInvalid()" formControlName="password" id="txtPassword" maxlength="100" />
+          </div>
+
+          @if (txtPasswordInvalid()) {
+            <div class="text-danger text-xs">
+              @if (txtPassword.errors?.['minlength']) {
+                <span>Password must be at least 6 characters long.</span>
+              }
+              @else if (txtPassword.errors?.['passwordWeak']) {
+                <span>Please provide a stronger password. It must contain at least one letter and one number.</span>
+              }
+            </div>
+          }
+
+          <div class="pb-2">
+            <label for="txtConfirmPassword">Confirm password</label>
+            <input type="password" class="form-control" [class.form-control-error]="txtConfirmPasswordInvalid() || passwordsUnmatch()" formControlName="confirmPassword" id="txtConfirmPassword" maxlength="100" />
+          </div>
+
+          @if (passwordsUnmatch()) {
+            <div class="text-danger text-xs">Passwords don't match.</div>
+          }
+
+          <div class="flex flex-col items-center mb-6">
+            <button type="submit" class="btn-primary my-6 rounded-full flex justify-center w-full sm:w-auto" [disabled]="isLoading || createWaitlistForm.invalid">
+              @if (isLoading) {
+                <app-loading-spinner></app-loading-spinner>
+                <span>Creating...</span>
+              }
+              @else {
+                <span>Create waitlist!</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>

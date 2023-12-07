@@ -1,0 +1,36 @@
+<div class="min-h-screen flex flex-col">
+  <div class="bg-gradient p-4 grow flex flex-col">
+    <div class="flex justify-between">
+      <app-logo></app-logo>
+      <div class="basis-0 grow flex items-center justify-end xs:justify-center">
+        <span class="badge bg-success mr-2">
+          <span>Live</span>
+        </span>
+        <h3 class="text-sm font-semibold">Waitlist Status</h3>
+      </div>
+      <div class="w-[50px] hidden xs:block"></div>
+    </div>
+
+    <div class="grow flex flex-col justify-center">
+      <div class="h-80 mb-4">
+        <img class="w-full h-full" src="../../../assets/img/waitlist-complete.svg" alt="Waitlist complete">
+      </div>
+
+      <div class="max-w-md self-center">
+        <div class="mb-4">
+          <h1 class="font-extrabold text-2xl mb-4">Your wait is over!</h1>
+          <p>Thanks for your patience! You can go see host now, they're ready to attend you!</p>
+        </div>
+
+        <p class="mb-8">
+          <span class="font-semibold">Total wait time: </span>
+          {{totalWaitTime}}
+        </p>
+
+        <button class="btn-primary w-full mb-8" (click)="router.navigateByUrl('/', { replaceUrl: true })">Leave waitlist</button>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>

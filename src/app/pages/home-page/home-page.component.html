@@ -1,22 +1,33 @@
-<div class="h-screen flex flex-col bg-gradient-to-b from-[#faf7f7] to-white">
+<div class="h-[100svh] flex flex-col bg-gradient">
   <div class="p-4 grow flex flex-col justify-center">
     <div class="flex flex-col items-center mb-8">
       <img src="../assets/img/insta-queue-logo-transparent.png" class="max-h-44">
-      <h3 class="text-xl font-light text-center">A real-time waitlist app for restaurants!</h3>
+      <h3 class="text-xl font-light text-center">A real-time waitlist app for businesses!</h3>
     </div>
 
-    <div class="flex flex-col items-center py-8">
+    <form (ngSubmit)="handleValidateClick()" class="flex flex-col items-center py-8">
       <p class="text-center mb-4">Please enter the waitlist code:</p>
       <div class="max-w-xs">
-        <input type="text" id="txtWaitlistCode" [(ngModel)]="waitlistCode" (ngModelChange)="formatWaitlist()" (keydown.space)="$event.preventDefault()" placeholder="AAABBB" class="text-lg text-center font-semibold" maxlength="6" />
+        <input type="text" #txtWaitlistCode id="txtWaitlistCode" name="waitlistCode" [(ngModel)]="waitlistCode" (ngModelChange)="formatWaitlist()" (keydown.space)="$event.preventDefault()" placeholder="AAABBB" class="form-control text-lg text-center font-semibold" [class.form-control-error]="errorMessage" maxlength="6" />
+
+        @if (errorMessage) {
+          <div class="text-danger text-sm mt-2 text-center w-full">{{errorMessage}}</div>
+        }
       </div>
-      <button class="mt-8 rounded-full" [disabled]="waitlistCode.trim().length !== 6">Validate code</button>
 
-      <p class="text-xs mt-6">Or <a href="#">host a new waitlist</a></p>
-    </div>
+      <button type="submit" class="btn-primary mt-8 mb-6 rounded-full flex" [disabled]="isLoading || waitlistCode.trim().length !== 6">
+        @if (isLoading) {
+          <app-loading-spinner></app-loading-spinner>
+          <span>Validating...</span>
+        }
+        @else {
+          <span>Validate code</span>
+        }
+      </button>
+
+      <p class="text-xs">Or <a routerLink="create-waitlist">host a new waitlist</a></p>
+    </form>
   </div>
 
-  <div class="bg-primary-dark text-xs p-1 text-center text-white">
-    <p>Made with ♥ by <a href="https://github.com/gerardormz98/" class="text-white hover:font-semibold hover:text-white">Gerardo Ramírez</a> - 2023</p>
-  </div>
+  <app-footer></app-footer>
 </div>

@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
 
 @tailwind base;
 @tailwind components;
@@ -10,19 +11,77 @@
     @apply font-inter text-slate-900
   }
 
-  input {
-    @apply block w-full bg-white rounded-md py-2 px-3 text-sm shadow-sm ring-1 ring-inset outline-none ring-gray-300 focus:ring-2 focus:ring-primary;
-  }
-
   label {
     @apply text-sm inline-block py-3 font-semibold;
-  }
-
-  button {
-    @apply py-2 px-4 rounded-md text-white text-sm font-bold bg-primary hover:bg-primary-dark disabled:bg-primary-disabled disabled:cursor-not-allowed;
   }
 
   a {
     @apply text-primary-light hover:text-primary-dark underline
   }
+}
+
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 rounded-md text-white text-sm text-center font-bold bg-primary hover:bg-primary-dark disabled:bg-primary-disabled disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply py-2 px-4 border rounded-md text-sm text-center font-semibold bg-white hover:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed;
+  }
+
+  .form-control {
+    @apply block w-full bg-white rounded-md py-2 px-3 text-sm shadow-sm ring-1 ring-inset outline-none ring-gray-300 focus:ring-2 focus:ring-primary;
+  }
+
+  .form-control-error {
+    @apply ring-danger;
+  }
+
+  .badge {
+    @apply px-2 py-0.5 rounded text-xs text-gray-50 font-medium flex items-center;
+  }
+
+  .card {
+    @apply w-full bg-white rounded shadow-[0px_5px_25px_-7px_rgba(150,150,150,0.75)] transition-opacity duration-700
+  }
+
+  hr.separator {
+    @apply border-[5px] border-gray-100 -mx-4
+  }
+}
+
+@layer utilities {
+  .bg-gradient {
+    @apply bg-gradient-to-b from-[#faf7f7] to-white;
+  }
+}
+
+/* ---------------------
+      Global styles
+-----------------------*/
+
+* {
+  // Prevents blue tap highlight on mobile
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #b3b3b3;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #8d8d8d;
 }

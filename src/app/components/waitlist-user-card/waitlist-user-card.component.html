@@ -1,0 +1,50 @@
+<div class="card flex mb-4">
+  <div class="{{ user.currentPosition === 1 ? 'bg-success' : 'bg-secondary' }} min-w-[5px] min-h-full rounded-l"></div>
+
+  <div class="py-2 ml-3 mr-4 w-full overflow-hidden">
+    <div class="flex justify-between items-center max-w-full mb-4 sm:my-1">
+      <div class="overflow-hidden">
+        <p class="font-semibold mb-1 truncate">{{ user.currentPosition }}. {{ user.name }}</p>
+        <p class="text-xs mb-1">Party of {{user.partySize}}</p>
+
+        <div class="text-xs font-semibold flex items-center">
+          <p class="{{ user.notifyCount === 0 ? 'text-secondary' : 'text-warning'}}">{{ user.notifyCount === 0 ? 'Waiting' : "Notified"}}</p>
+
+          @if (user.notifyCount > 0) {
+            <span class="badge bg-warning rounded-full text-xxs ml-1">{{ user.notifyCount }}</span>
+          }
+        </div>
+      </div>
+      <div class="shrink-0 flex items-center">
+        <div class="text-right">
+          <p class="text-sm font-semibold mb-1">{{ getCheckInTimeAgo() }}</p>
+          <p class="text-xs text-gray-500">Joined at {{user.checkInTime | date:'shortTime' | lowercase}}</p>
+        </div>
+
+        <div class="hidden sm:flex gap-2 ml-4 justify-between text-white">
+          <button class="rounded-full bg-secondary hover:bg-secondary-dark w-[45px] h-[45px] flex justify-center items-center" title="Notify" (click)="notifyClick()">
+            <span class="material-symbols-outlined">notifications_active</span>
+          </button>
+          <button class="rounded-full bg-success hover:bg-success-dark w-[45px] h-[45px] flex justify-center items-center" title="Complete" (click)="completeClick()">
+            <span class="material-symbols-outlined">check</span>
+          </button>
+          <button class="rounded-full bg-danger hover:bg-danger-dark w-[45px] h-[45px] flex justify-center items-center" title="Remove" (click)="removeClick()">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex sm:hidden justify-between text-white mb-1">
+      <button class="rounded-full bg-secondary hover:bg-secondary-dark w-[45px] h-[45px] flex justify-center items-center" title="Notify" (click)="notifyClick()">
+        <span class="material-symbols-outlined">notifications_active</span>
+      </button>
+      <button class="rounded-full bg-success hover:bg-success-dark w-[45px] h-[45px] flex justify-center items-center" title="Complete" (click)="completeClick()">
+        <span class="material-symbols-outlined">check</span>
+      </button>
+      <button class="rounded-full bg-danger hover:bg-danger-dark w-[45px] h-[45px] flex justify-center items-center" title="Remove" (click)="removeClick()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+  </div>
+</div>

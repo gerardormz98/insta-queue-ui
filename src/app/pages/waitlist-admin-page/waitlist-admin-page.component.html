@@ -1,0 +1,97 @@
+<div class="min-h-screen flex flex-col">
+  <div class="bg-gradient p-4 grow flex flex-col">
+    <div class="flex justify-between mb-4">
+      <app-logo></app-logo>
+      <div class="basis-0 grow flex items-center justify-end xs:justify-center">
+        <span class="badge bg-success mr-2">
+          <span>Live</span>
+        </span>
+        <h3 class="text-sm font-semibold">Waitlist Admin</h3>
+      </div>
+      <div class="w-[50px] hidden xs:block"></div>
+    </div>
+
+    <div class="grow flex flex-col">
+      <div class="mb-6 flex justify-between items-center gap-4">
+        <div>
+          <h3 class="text-lg font-bold">{{ host ? host.hostName : '...' }}'s waitlist</h3>
+          <p class="text-gray-500 text-sm">Waitlist code: <span class="font-bold">{{ host ? host.waitlistCode : '...' }}</span></p>
+        </div>
+        <div class="flex justify-between items-center gap-2">
+          <button class="btn-secondary rounded-full p-2 flex items-center justify-center" (click)="handleQRClick()" title="Generate QR code">
+            <span class="material-symbols-outlined">qr_code</span>
+          </button>
+          <button class="btn-secondary" (click)="handleEditWaitlistClick()" title="Edit waitlist">Edit</button>
+        </div>
+      </div>
+
+      @if (waitlist.length === 0)
+      {
+        <div class="grow flex flex-col justify-center items-center mb-8">
+          <div class="h-60 mb-4">
+            <img class="w-full h-full" src="../../../assets/img/empty-waitlist.svg" alt="Empty waitlist">
+          </div>
+
+          <div class="text-center max-w-md">
+            <p class="text-gray-400 font-semibold mb-2">The waitlist is currently empty!</p>
+            <p class="text-gray-400 text-sm">This will be updated in real-time when a new customer joins the waitlist..</p>
+          </div>
+        </div>
+      }
+
+      @for(user of waitlist; track user.userId)
+      {
+        <app-waitlist-user-card [user]="user" (notifyClicked)="handleNotifyUserClick(user)" (completeClicked)="handleCompleteUserClick(user)" (removeClicked)="handleRemoveUserClick(user)"></app-waitlist-user-card>
+      }
+    </div>
+  </div>
+
+  @if (isNotifyUserAlertModalVisible)
+  {
+    <app-alert-modal
+      alertStyle="Confirm"
+      modalTitle="Notify User"
+      modalMessage="Are you sure you want to notify <b>{{selectedUser.name}}</b> that you're ready to receive their party?"
+      confirmButtonText="Notify"
+      cancelButtonText="Cancel"
+      (modalCancel)="handleNotifyUserModalCancel()"
+      (modalConfirm)="handleNotifyUserModalConfirm()">
+    </app-alert-modal>
+  }
+
+  @if (isCompleteUserAlertModalVisible)
+  {
+    <app-alert-modal
+      alertStyle="Success"
+      modalTitle="Complete User"
+      modalMessage="Are you sure you want to mark <b>{{selectedUser.name}}</b> as completed?"
+      confirmButtonText="Complete"
+      cancelButtonText="Cancel"
+      (modalCancel)="handleCompleteUserModalCancel()"
+      (modalConfirm)="handleCompleteUserModalConfirm()">
+    </app-alert-modal>
+  }
+
+  @if (isRemoveUserAlertModalVisible)
+  {
+    <app-alert-modal
+      alertStyle="Danger"
+      modalTitle="Remove User"
+      modalMessage="Are you sure you want to remove <b>{{selectedUser.name}}</b> from the waitlist?"
+      confirmButtonText="Confirm"
+      cancelButtonText="Cancel"
+      (modalCancel)="handleRemoveUserModalCancel()"
+      (modalConfirm)="handleRemoveUserModalConfirm()">
+    </app-alert-modal>
+  }
+
+  @if (isQRAlertModalVisible)
+  {
+    <app-qr-modal
+      [qrText]="enqueueUrl"
+      (modalClose)="handleQRModalClose()">
+    </app-qr-modal>
+  }
+
+  <app-footer></app-footer>
+</div>

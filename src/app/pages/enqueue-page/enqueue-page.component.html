@@ -1,26 +1,54 @@
-<p>enqueue-page works!</p>
+<div class="h-[100svh] flex flex-col bg-gradient">
+  <div class="p-4 grow">
+    <div class="flex justify-between items-center">
+      <app-logo></app-logo>
+      <app-back-button></app-back-button>
+    </div>
 
-<!-- @if (isLoading)
-  {
-    <span>Connecting...</span>
-  }
-  @else
-  {
-    <p class="font-bold">There are {{waitlistSize}} persons in the waitlist...</p>
-  }
+    <h3 class="text-3xl font-bold py-4 text-center">Welcome to {{ host ? host.hostName : '...' }}!</h3>
 
-  <h3 class="text-3xl font-extrabold py-4">Enqueue</h3>
+    <div class="flex flex-col items-center py-4">
+      <div class="flex flex-col items-center justify-center text-center bg-white border-2 border-gray-300 border-dashed rounded-full w-[200px] h-[200px] min-w-[200px]">
+        <span class="text-sm text-gray-400 font-light">There are currently</span>
+        <span class="text-4xl font-semibold py-3">
+            <span>{{ host ? host.size : '0'}}</span>
+        </span>
+        <span class="text-sm text-gray-400 font-light">people waiting...</span>
+      </div>
+    </div>
 
-  <div class="pb-2">
-    <label for="txtName">Name: </label>
-    <input type="text" id="txtName" placeholder="John Doe" />
+    <div class="flex flex-col items-center">
+      <div class="max-w-md w-full">
+        <h3 class="text-2xl font-bold py-4 w-full">Enqueue</h3>
+
+        <form class="w-full" (ngSubmit)="addToWaitlistQueue()">
+          <div class="pb-2">
+            <label for="txtName">Full Name</label>
+            <input type="text" class="form-control" [(ngModel)]="name" (change)="name = name.trim()" id="txtName" name="name" required placeholder="John Doe" maxlength="100" />
+          </div>
+
+          <div class="pb-2">
+            <label for="txtPartySize">How many people are in your party?</label>
+            <input type="number" class="form-control" [(ngModel)]="partySize" id="txtPartySize" name="partySize" min="1" required placeholder="1" max="50" />
+          </div>
+
+          <div class="flex flex-col items-center mb-6">
+            <button type="submit" class="btn-primary my-6 rounded-full flex" [disabled]="!isEnqueueFormValid() || isLoading">
+              @if (isLoading) {
+                <app-loading-spinner></app-loading-spinner>
+                <span>Adding to waitlist...</span>
+              }
+              @else {
+                <span>Add me to the waitlist!</span>
+              }
+            </button>
+
+            <p class="text-xs"><a routerLink="/admin-access/{{ host ? host.waitlistCode : ''}}">I am an administrator</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <div class="pb-2">
-    <label for="txtPartyQuantity">How many members are in your party? </label>
-    <input type="number" id="txtPartyQuantity" min="1" placeholder="1" />
-  </div>
-
-  <button class="mt-6 rounded-full" (click)="addToWaitList()" [disabled]="addedToWaitlist || isLoading">
-    {{ addedToWaitlist ? "You are on the waitlist. Thank you!" : "Add me to the waitlist!"}}
-  </button> -->
+  <app-footer></app-footer>
+</div>

@@ -1,1 +1,87 @@
-<p>waitlist-page works!</p>
+<div class="min-h-screen flex flex-col">
+  <div class="bg-gradient p-4 grow">
+    <div class="flex justify-between">
+      <app-logo></app-logo>
+      <div class="basis-0 grow flex items-center justify-end xs:justify-center">
+        <span class="badge bg-success mr-2">
+          <span>Live</span>
+        </span>
+        <h3 class="text-sm font-semibold">Waitlist Status</h3>
+      </div>
+      <div class="w-[50px] hidden xs:block"></div>
+    </div>
+
+    <div class="h-80">
+      <img class="w-full h-full" src="../../../assets/img/people-queue.svg" alt="People waiting">
+    </div>
+
+    <div class="card flex mb-8" #notificationCard>
+      <div class="bg-secondary min-w-[5px] min-h-full mr-2 rounded-l"></div>
+      <div class="grow overflow-hidden py-3 px-1 flex justify-between items-center">
+        <div class="max-w-full">
+          <p class="text-sm font-semibold">You're on the waitlist!</p>
+          <p class="text-xs truncate">Party of {{user.partySize}} for {{user.name}}.</p>
+        </div>
+      </div>
+      <button class="p-2 mr-1 fill-gray-400 hover:fill-gray-600 hover:scale-110" (click)="hideNotification()">
+        <svg class="h-3 w-3" viewBox="0 0 460.775 460.775">
+          <path d="M285.08,230.397L456.218,59.27c6.076-6.077,6.076-15.911,0-21.986L423.511,4.565c-2.913-2.911-6.866-4.55-10.992-4.55
+          c-4.127,0-8.08,1.639-10.993,4.55l-171.138,171.14L59.25,4.565c-2.913-2.911-6.866-4.55-10.993-4.55
+          c-4.126,0-8.08,1.639-10.992,4.55L4.558,37.284c-6.077,6.075-6.077,15.909,0,21.986l171.138,171.128L4.575,401.505
+          c-6.074,6.077-6.074,15.911,0,21.986l32.709,32.719c2.911,2.911,6.865,4.55,10.992,4.55c4.127,0,8.08-1.639,10.994-4.55
+          l171.117-171.12l171.118,171.12c2.913,2.911,6.866,4.55,10.993,4.55c4.128,0,8.081-1.639,10.992-4.55l32.709-32.719
+          c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="my-6">
+      <h2 class="text-2xl font-bold mb-2">You checked in at {{ user.checkInTime | date:'shortTime' | lowercase}}</h2>
+      <p class="text-sm text-gray-500 leading-relaxed">We will notify you when {{ host.hostName }} is ready to receive you. This page will be updated in real-time.</p>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="my-6">
+      <div class="flex items-center mb-1 justify-between">
+        <h3 class="text-lg font-bold">You are <span class="{{ user.currentPosition <= 3 ? 'text-success' : user.currentPosition <= 6 ? 'text-warning' : 'text-danger' }}">{{user.currentPosition | ordinalNumber}}</span> in line</h3>
+        <span class="badge bg-success mr-2 w-fit">
+          <svg class="mr-1 w-2 h-2 fill-danger animate-pulse" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3"></circle></svg>
+          <span>Live</span>
+        </span>
+      </div>
+      <p class="text-sm text-gray-500 mb-4">Based on all party sizes</p>
+      <div class="w-full flex gap-2">
+        <button class="btn-secondary w-full" (click)="openWaitlist()">View Waitlist</button>
+        <button class="btn-secondary w-full" (click)="confirmLeaveWaitlist()">Leave Waitlist</button>
+      </div>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="my-6">
+      <h3 class="text-lg font-bold mb-4">About {{ host.hostName }}</h3>
+      <p class="text-sm whitespace-pre-wrap">{{ host.hostDescription }}</p>
+    </div>
+
+    <hr class="separator" />
+  </div>
+
+  @if (isWaitlistOpened) {
+    <app-waitlist-details [waitlistData]="waitlist" [currentLinePosition]="user.currentPosition" (waitlistClosed)="handleWaitlistClosed()"></app-waitlist-details>
+  }
+
+  @if (isLeaveWaitlistModalOpened)
+  {
+    <app-alert-modal
+      modalTitle="Leave Waitlist"
+      modalMessage="Are you sure you want to leave the waitlist? Your place in line will be lost."
+      confirmButtonText="Leave waitlist"
+      cancelButtonText="Cancel"
+      (modalCancel)="handleLeaveWaitlistModalCancel()"
+      (modalConfirm)="handleLeaveWaitlistModalConfirm()">
+    </app-alert-modal>
+  }
+
+  <app-footer></app-footer>
+</div>

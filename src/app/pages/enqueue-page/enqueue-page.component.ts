@@ -15,11 +15,12 @@ import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { BackButtonComponent } from 'src/app/components/back-button/back-button.component';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationStyle } from 'src/app/model/appNotification';
+import { AlertModalComponent } from 'src/app/components/alert-modal/alert-modal.component';
 
 @Component({
   selector: 'app-enqueue-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, FooterComponent, LoadingSpinnerComponent, LogoComponent, BackButtonComponent],
+  imports: [CommonModule, FormsModule, RouterModule, FooterComponent, LoadingSpinnerComponent, LogoComponent, BackButtonComponent, AlertModalComponent],
   templateUrl: './enqueue-page.component.html',
   styleUrl: './enqueue-page.component.scss'
 })
@@ -27,6 +28,7 @@ export class EnqueuePageComponent implements OnDestroy {
   host: WaitlistHost;
   isLoading = false;
   addedToWaitlist = false;
+  isMaxUsersReachedModalVisible = false;
 
   name = '';
   partySize: number = 1;
@@ -34,6 +36,7 @@ export class EnqueuePageComponent implements OnDestroy {
   private partyAdded$: Subscription;
   private partyRemoved$: Subscription;
   private waitlistClosed$: Subscription;
+  private waitlistFullError$: Subscription;
 
   constructor(private liveWaitlistService: LiveWaitlistService, private waitlistHostService: WaitlistHostService, private localUserIdService: LocalUserIdService, private activatedRoute: ActivatedRoute, private router: Router, private notificationService: NotificationService) {}
 
@@ -56,6 +59,7 @@ export class EnqueuePageComponent implements OnDestroy {
     this.partyAdded$ = this.liveWaitlistService.partyAdded.subscribe((data) => { this.onPartyAdded(data) });
     this.partyRemoved$ = this.liveWaitlistService.partyRemoved.subscribe((data) => { this.onPartyRemoved(data) });
     this.waitlistClosed$ = this.liveWaitlistService.waitlistClosed.subscribe((data) => { this.onWaitlistClosed(data) });
+    this.waitlistFullError$ = this.liveWaitlistService.waitlistFullError.subscribe((data) => { this.onWaitlistFullError(data) });
   }
 
   isEnqueueFormValid() {
@@ -98,10 +102,16 @@ export class EnqueuePageComponent implements OnDestroy {
     this.notificationService.triggerNotification("Waitlist closed!", "We're sorry! The waitlist has been closed by the host.", NotificationStyle.Danger);
   }
 
+  onWaitlistFullError(data: any) {
+    this.isMaxUsersReachedModalVisible = true;
+    this.isLoading = false;
+  }
+
   ngOnDestroy() {
     this.partyAdded$.unsubscribe();
     this.partyRemoved$.unsubscribe();
     this.waitlistClosed$.unsubscribe();
+    this.waitlistFullError$.unsubscribe();
 
     if (!this.addedToWaitlist) {
       let waitlistCode = this.activatedRoute.snapshot.params[ROUTE_PARAM_WAITLIST_CODE];

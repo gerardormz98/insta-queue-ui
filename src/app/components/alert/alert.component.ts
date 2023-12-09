@@ -33,7 +33,7 @@ export class AlertComponent implements AfterViewInit, OnChanges {
     if (!this.alertStyle || this.alertStyle === NotificationStyle.Success) {
       this.closeTimeout = setTimeout(() => {
         this.closeAlert();
-      }, 3000);
+      }, 2000);
     }
     else {
       clearTimeout(this.closeTimeout);

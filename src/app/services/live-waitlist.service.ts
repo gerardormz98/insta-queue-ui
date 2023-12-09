@@ -22,6 +22,7 @@ export class LiveWaitlistService {
   partyAdded = new Subject<any>();
   partyRemoved = new Subject<any>();
   waitlistClosed = new Subject<any>();
+  waitlistFullError = new Subject<any>();
 
   constructor(private userIdService: LocalUserIdService, private loginService: LoginService, private notificationService: NotificationService) {
     this.connection = new HubConnectionBuilder().withUrl(`${this.baseUrl}/live-waitlist`, { accessTokenFactory: () => this.loginService.getToken() ?? '' }).withAutomaticReconnect([1000, 2000, 4000, 8000, 16000, 32000]).build();
@@ -34,6 +35,7 @@ export class LiveWaitlistService {
     this.connection.on("OnPartyAdded", data => this.onPartyAdded(data));
     this.connection.on("OnPartyRemoved", data => this.onPartyRemoved(data));
     this.connection.on("OnWaitlistClosed", data => this.onWaitlistClosed(data));
+    this.connection.on("OnWaitlistFullError", data => this.onWaitlistFullError(data));
 
     this.connection.onclose(() => this.onConnectionLost());
     this.connection.onreconnecting(() => this.onReconnecting());
@@ -103,6 +105,10 @@ export class LiveWaitlistService {
 
   private onWaitlistClosed(data: any) {
     this.waitlistClosed.next(data);
+  }
+
+  private onWaitlistFullError(data: any) {
+    this.waitlistFullError.next(data);
   }
 
   private onConnectionLost() {

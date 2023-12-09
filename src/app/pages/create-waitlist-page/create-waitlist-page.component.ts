@@ -12,17 +12,20 @@ import { take } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { BackButtonComponent } from 'src/app/components/back-button/back-button.component';
+import { ROUTE_NAME_WAITLIST_ADMIN } from 'src/app/constants';
+import { AlertModalComponent } from 'src/app/components/alert-modal/alert-modal.component';
 
 @Component({
   selector: 'app-create-waitlist-page',
   standalone: true,
-  imports: [CommonModule, FooterComponent, RouterModule, ReactiveFormsModule, LoadingSpinnerComponent, LogoComponent, BackButtonComponent],
+  imports: [CommonModule, FooterComponent, RouterModule, ReactiveFormsModule, LoadingSpinnerComponent, LogoComponent, BackButtonComponent, AlertModalComponent],
   templateUrl: './create-waitlist-page.component.html',
   styleUrl: './create-waitlist-page.component.scss'
 })
 export class CreateWaitlistPageComponent {
   isLoading = false;
   errorMessage = '';
+  isMaxHostsReachedModalVisible = false;
 
   txtName = new FormControl('', [Validators.required, Validators.minLength(2)]);
   txtDescription = new FormControl('', [Validators.required, Validators.minLength(20)]);
@@ -59,11 +62,16 @@ export class CreateWaitlistPageComponent {
       next: (response) => {
         const code = response.waitlistCode;
         this.loginService.tryLoginAsAdmin(code, waitlistHostRequest.password).pipe(take(1)).subscribe(() => {
-          this.router.navigate(['waitlist-admin', code]);
+          this.router.navigate([ROUTE_NAME_WAITLIST_ADMIN, code]);
         });
       },
       error: (error) => {
         console.log(error);
+
+        if (error.status === 403) {
+          this.isMaxHostsReachedModalVisible = true;
+        }
+
         this.isLoading = false;
       }
     });

@@ -90,5 +90,14 @@
     </div>
   </div>
 
+  @if (isMaxHostsReachedModalVisible) {
+    <app-alert-modal
+      modalTitle="We're full right now!"
+      modalMessage="We're sorry! Our server has reached the maximum amount of concurrent waitlists hosts. Please try again later."
+      alertStyle="Danger"
+      cancelButtonText="OK"
+      (modalCancel)="isMaxHostsReachedModalVisible = false" />
+  }
+
   <app-footer></app-footer>
 </div>

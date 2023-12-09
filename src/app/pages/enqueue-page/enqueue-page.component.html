@@ -50,5 +50,14 @@
     </div>
   </div>
 
+  @if (isMaxUsersReachedModalVisible) {
+    <app-alert-modal
+      modalTitle="We're full right now!"
+      modalMessage="We're sorry! The waitlist has reached the maximum amount of concurrent users. Please try again later."
+      alertStyle="Danger"
+      cancelButtonText="OK"
+      (modalCancel)="isMaxUsersReachedModalVisible = false" />
+  }
+
   <app-footer></app-footer>
 </div>

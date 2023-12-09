@@ -45,8 +45,12 @@
       <p class="text-sm text-gray-500 mb-4 text-center break-words sm:text-left" [innerHTML]="modalMessage"></p>
 
       <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
-        <button class="btn-primary {{getConfirmButtonStyle()}} w-full sm:w-auto sm:order-2" (click)="confirmModal()">{{confirmButtonText}}</button>
-        <button class="btn-secondary w-full sm:w-auto sm:order-1" (click)="cancelModal()">{{cancelButtonText}}</button>
+        @if (confirmButtonText) {
+          <button class="btn-primary {{getConfirmButtonStyle()}} w-full sm:w-auto sm:order-2" (click)="confirmModal()">{{confirmButtonText}}</button>
+        }
+        @if (cancelButtonText) {
+          <button class="btn-secondary w-full sm:w-auto sm:order-1" (click)="cancelModal()">{{cancelButtonText}}</button>
+        }
       </div>
     </div>
   </div>

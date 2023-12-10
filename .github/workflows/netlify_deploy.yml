@@ -20,15 +20,15 @@ jobs:
     - name: Install dependencies
       run: npm install --legacy-peer-deps
 
-    - name: Build file
-      run: npm run build
-
     - name: replace-env
       uses: nightstory/replace-env@v2
       with:
-        input_file: 'dist/'
+        input_file: 'src/environments/environment.ts'
       env:
         API_URL: ${{ vars.API_URL }}
+
+    - name: Build file
+      run: npm run build
 
     - name: Netlify Actions
       uses: nwtgck/actions-netlify@v2.1.0

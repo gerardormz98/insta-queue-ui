@@ -26,7 +26,7 @@ jobs:
       with:
         files: '["**/environments/environment.ts"]'
       env:
-        API_URL: ${{ variables.API_URL }}
+        API_URL: $API_URL
     
     - name: Build file
       run: npm run build

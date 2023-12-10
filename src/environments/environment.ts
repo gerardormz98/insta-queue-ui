@@ -1,3 +1,3 @@
 export const environment = {
-  apiBaseUrl: "${API_URL}"
+  apiBaseUrl: "https://livewaitlist-web-dev.azurewebsites.net/"
 };

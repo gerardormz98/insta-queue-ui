@@ -4,14 +4,17 @@
 
 <router-outlet></router-outlet>
 
-<div class="fixed bottom-5 w-full p-4 flex flex-col-reverse sm:bottom-auto sm:top-0 sm:right-0 sm:max-w-md sm:flex-col">
-  @for(notification of notifications; track notification.id)
-  {
-    <app-notification
-      [title]="notification.title"
-      [description]="notification.description"
-      [notificationStyle]="notification.style"
-      (notificationClosed)="onCloseNotification(notification)">
-    </app-notification>
-  }
-</div>
+@if (notifications.length > 0)
+{
+  <div class="fixed bottom-5 w-full p-4 flex flex-col-reverse sm:bottom-auto sm:top-0 sm:right-0 sm:max-w-md sm:flex-col">
+    @for(notification of notifications; track notification.id)
+    {
+      <app-notification
+        [title]="notification.title"
+        [description]="notification.description"
+        [notificationStyle]="notification.style"
+        (notificationClosed)="onCloseNotification(notification)">
+      </app-notification>
+    }
+  </div>
+}

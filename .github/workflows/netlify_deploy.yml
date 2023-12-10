@@ -12,6 +12,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4.1.1
 
+    - uses: cschleiden/replace-tokens@v1
+      with:
+        files: '["**/environments/environment.ts"]'
+      env:
+        API_URL: ${{ vars.API_URL }}
+
     - name: Use Node.js 18.x
       uses: actions/setup-node@v4.0.0
       with:
@@ -21,12 +27,6 @@ jobs:
 
     - name: Install dependencies
       run: npm install --legacy-peer-deps
-
-    - uses: cschleiden/replace-tokens@v1
-      with:
-        files: '["**/environments/environment.ts"]'
-      env:
-        API_URL: ${{ vars.API_URL }}
 
     - name: Build file
       run: npm run build

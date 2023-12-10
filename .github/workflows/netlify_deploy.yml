@@ -23,9 +23,10 @@ jobs:
     - name: Build file
       run: npm run build
 
-    - uses: cschleiden/replace-tokens@v1
+    - name: replace-env
+      uses: nightstory/replace-env@v2
       with:
-        files: '["**/*.js"]'
+        input_file: 'dist/'
       env:
         API_URL: ${{ vars.API_URL }}
 

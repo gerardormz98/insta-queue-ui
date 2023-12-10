@@ -18,6 +18,9 @@ jobs:
       env:
         API_URL: ${{ vars.API_URL }}
 
+    - name: Print environment file
+      run: cat src/environments/environment.ts
+
     - name: Use Node.js 18.x
       uses: actions/setup-node@v4.0.0
       with:

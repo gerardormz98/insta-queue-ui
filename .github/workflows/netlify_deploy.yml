@@ -20,13 +20,6 @@ jobs:
     - name: Install dependencies
       run: npm install --legacy-peer-deps
 
-    - name: replace-env
-      uses: nightstory/replace-env@v2
-      with:
-        input_file: 'src/environments/environment.ts'
-      env:
-        API_URL: ${{ vars.API_URL }}
-
     - name: Build file
       run: npm run build
 

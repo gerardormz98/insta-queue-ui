@@ -2,6 +2,18 @@
   <app-alert [text]="alert.text" [alertStyle]="alert.style" (alertClosed)="onAlertClosed()"></app-alert>
 }
 
+@if (!serverResponded) {
+  <div class="w-screen h-[100svh] bg-gradient flex justify-center items-center">
+    @if (loading) {
+        <span class="text-primary mr-1 text-xl">
+          <app-loading-spinner></app-loading-spinner>
+        </span>
+        <p class="text-gray-500">Loading, please wait...</p>
+    }
+  </div>
+}
+
+
 <router-outlet></router-outlet>
 
 @if (notifications.length > 0)

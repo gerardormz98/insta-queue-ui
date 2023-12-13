@@ -4,7 +4,7 @@
 
 InstaQueue is a real-time waitlist manager for restaurants and businesses. Users can join the waitlist, see their position in real-time, get notified when their table is ready, and more!
 
-Inspired by Yelp's waitlist. Built by me 😊.
+Inspired by Yelp's Guest Manager. Built by me 😊.
 
 ## Main Features
 **Admins (Waitlist hosts)**

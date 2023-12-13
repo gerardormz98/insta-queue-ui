@@ -6,11 +6,39 @@ InstaQueue is a real-time waitlist manager for restaurants and businesses. Users
 
 Inspired by Yelp's waitlist. Built by me 😊.
 
-## Features
-TODO
+## Main Features
+**Admins (Waitlist hosts)**
+
+ - Create a new waitlist
+ - Access admin features by password.
+ - Edit waitlist.
+ - View all users in waitlist.
+ - Notify (buzz) users.
+ - Kick users from the waitlist.
+ - Mark user's party as completed.
+ - Generate QR code to invite new users to join.
+
+**Users**
+
+ - Join waitlist by code or QR scan.
+ - See current waitlist position, but hiding the information from other users.
+ - Leave waitlist at any time.
+ - Receive notifications from the administrator.
+ - See total wait time.
 
 ## Try it live!
-You can test the project here: https://instaqueue.netlify.app/
+You can test the project here: https://instaqueue.netlify.app/. 
+
+Ideally, you want to test with two devices: one acting as the administator and the other one as the user. I suggest you try the following flow:
+
+ 1. Create waitlist with the admin device.
+ 2. Generate QR code.
+ 3. Scan QR with user's device.
+ 4. Join the waitlist with user's device.
+ 5. Verify that user appears in admin dashboard.
+ 6. Send a notification to the user.
+ 7. Mark the user as completed.
+ 8. See total wait time on user's device.
 
 ## Technology stack
 This app was built in Angular 17 + .NET in the back-end. It uses Microsoft SignalR to achieve real-time functionalities, and a regular REST API for the other stuff.

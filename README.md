@@ -1,27 +1,36 @@
-# LiveWaitlist
+# InstaQueue App ⏱️
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.8.
+![InstaQueue](https://github.com/gerardormz98/insta-queue-ui/assets/20232727/d85d36d3-db1c-4cd5-bba4-dd6d536fa37b)
 
-## Development server
+InstaQueue is a real-time waitlist manager for restaurants and businesses. Users can join the waitlist, see their position in real-time, get notified when their table is ready, and more!
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Inspired by Yelp's waitlist. Built by me 😊.
 
-## Code scaffolding
+## Features
+TODO
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Try it live!
+You can test the project here: https://instaqueue.netlify.app/
 
-## Build
+## Technology stack
+This app was built in Angular 17 + .NET in the back-end. It uses Microsoft SignalR to achieve real-time functionalities, and a regular REST API for the other stuff.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Back-end source: https://github.com/gerardormz98/insta-queue-server.
 
-## Running unit tests
+Here's the details of the technologies used:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ - `Angular 17`
+ - `.NET 7`
+ - `Microsoft SignalR`
+ - `Entity Framework Core`
+ - `Json Web Token`
+ - `Tailwind CSS`
+ - `Microsoft Azure`
+ - `Netlify`
 
-## Running end-to-end tests
+## Note 
+This is a practice project I built in my free time to challenge my development skills. It is not intended to be used in a production environment (yet) and all the data captured will be removed eventually.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Feel free to test it and report any bugs you find. Suggestions or comments are also welcome!
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Thank you!

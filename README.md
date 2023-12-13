@@ -39,6 +39,7 @@ Ideally, you want to test with two devices: one acting as the administator and t
  6. Send a notification to the user.
  7. Mark the user as completed.
  8. See total wait time on user's device.
+ 9. Close the waitlist with the admin device.
 
 ## Technology stack
 This app was built in Angular 17 + .NET in the back-end. It uses Microsoft SignalR to achieve real-time functionalities, and a regular REST API for the other stuff.

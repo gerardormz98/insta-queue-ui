@@ -58,7 +58,7 @@ Here's the details of the technologies used:
  - `Netlify`
 
 ## Note 
-This is a practice project I built in my free time to challenge my development skills. It is not intended to be used in a production environment (yet) and all the data captured will be removed eventually.
+This is a practice project I built in my free time to challenge my development skills. It is not intended to be used in a production environment (yet) and all the data captured will be removed eventually. It's all stored in-memory.
 
 Feel free to test it and report any bugs you find. Suggestions or comments are also welcome!
 
